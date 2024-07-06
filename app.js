@@ -9,7 +9,21 @@ const usersRouter = require("./routes/users");
 
 const app = express();
 
-// view engine setup
+const mongoose = require("mongoose");
+mongoose.set("strictQuery", false);
+const mongoDB =
+  "mongodb+srv://Fuky9:GreenArrow9@cluster0.c1y3mqs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+const main = async () => {
+  try {
+    await mongoose.connect(mongoDB);
+    console.log("Successfully connected to the database");
+  } catch (err) {
+    console.error("Error connecting to the database", err);
+  }
+};
+
+// view engine setup"
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
