@@ -32,7 +32,11 @@ exports.index = asyncHandler(async (req, res, next) => {
 
 // Display list of all books.
 exports.book_list = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Book list");
+  const allBooks = await Book.find({}, "title author")
+    .sort({ title: 1 })
+    .populate("author");
+
+  res.render("bookList", { title: "Book List", bookList: allBooks });
 });
 
 // Display detail page for a specific book.
