@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    h1(class='title')= title
+
+    if authorList.length
+        ul
+            each author in authorList
+                li
+                    a(href=author.url)  #{author.name}
+                    br
+                    |  (#{author.formattedDateOfBirth}#{author.formattedDateOfDeath})
+    else
+        p There are no authors.
