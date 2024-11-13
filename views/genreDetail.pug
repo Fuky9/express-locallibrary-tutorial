@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    h1 Genre: #{genre.name}
+
+    div(class="text-container")
+        h2(class="page-text") Books
+        if genreBooks.length
+            dl
+                each book in genreBooks
+                    dt
+                        a(href=book.url) #{book.title}
+                    dd #{book.summary}
+                    br
+        else
+         p This genre has no books.
