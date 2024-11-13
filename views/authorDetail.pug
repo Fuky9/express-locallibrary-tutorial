@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    h1(class='title') #{author.name}
+    p #{author.formattedDateOfBirth}  #{author.formattedDateOfDeath}
+
+    div(class="text-container")
+
+        h2(class="page-text") Books
+        if authorBooks.length
+            dl
+                each book in authorBooks
+                    dt
+                        a(href=book.url) #{book.title}
+                    dd #{book.summary}
+                    br
+        else
+            p This author has no books

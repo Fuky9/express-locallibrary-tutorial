@@ -6,8 +6,9 @@ block content
     if bookList.length
         ul
             each book in bookList
-                li
+                li(class="page-text")
                     a(href=book.url) #{book.title}
-                    |   #{book.author.name}
+                p Author: &nbsp
+                    a(href=book.author.url) #{book.author.name}
     else
         p There are no books.

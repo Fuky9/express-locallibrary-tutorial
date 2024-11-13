@@ -30,7 +30,7 @@ AuthorSchema.virtual("formattedDateOfBirth").get(function () {
   return this.dateOfBirth
     ? "*" +
         DateTime.fromJSDate(this.dateOfBirth).toLocaleString(DateTime.DATE_MED)
-    : "Not specified";
+    : "Date of birth not specified";
 });
 
 AuthorSchema.virtual("formattedDateOfDeath").get(function () {
