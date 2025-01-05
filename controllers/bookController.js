@@ -79,7 +79,8 @@ exports.book_create_post = [
   // Convert the genre to an array.
   (req, res, next) => {
     if (!Array.isArray(req.body.genre)) {
-      typeof req.body.genre === "undefined" ? [] : [req.body.genre];
+      req.body.genre =
+        typeof req.body.genre === "undefined" ? [] : [req.body.genre];
     }
     next();
   },
@@ -87,7 +88,7 @@ exports.book_create_post = [
   // Validate and sanitize fields
   body("title", "Title must not be empty.")
     .trim()
-    .isLength({ min: 1 })
+    .isLength({ min: 2 })
     .escape(),
   body("author", "Author must not be empty.")
     .trim()
