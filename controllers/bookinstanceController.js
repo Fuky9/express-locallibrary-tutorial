@@ -34,10 +34,12 @@ exports.bookinstance_detail = asyncHandler(async (req, res, next) => {
 // Display BookInstance create form on GET
 exports.bookinstance_create_get = asyncHandler(async (req, res, next) => {
   const allBooks = await Book.find({}, "title").sort({ title: 1 });
+  const statuses = ["Available", "Maintenance", "Loaned", "Reserved"];
 
   res.render("bookInstanceForm", {
     title: "Create Book Instance",
     bookList: allBooks,
+    statuses: statuses,
   });
 });
 
@@ -47,7 +49,7 @@ exports.bookinstance_create_post = [
   body("book", "Book must be specified").trim().isLength({ min: 1 }).escape(),
   body("imprint", "Imprint must be specified")
     .trim()
-    .isLength({ min: 1 })
+    .isLength({ min: 2 })
     .escape(),
   body("status").escape(),
   body("dueBack", "Invalid date")
@@ -64,7 +66,7 @@ exports.bookinstance_create_post = [
     const bookInstance = new BookInstance({
       book: req.body.book,
       imprint: req.body.imprint,
-      status: req.body.status,
+      status: req.body.status || "Maintenance",
       dueBack: req.body.dueBack,
     });
 
@@ -72,13 +74,15 @@ exports.bookinstance_create_post = [
       // There are errors.
       // Render form again with sanitized values and error messages
       const allBooks = await Book.find({}, "title").sort({ title: 1 });
+      const statuses = ["Available", "Maintenance", "Loaned", "Reserved"];
 
       res.render("bookInstanceForm", {
         title: "Create Book Instance",
         bookList: allBooks,
-        selectedBook: bookInstance.book._id,
         errors: errors.array(),
         bookInstance: bookInstance,
+        selectedBook: bookInstance.book,
+        statuses: statuses,
       });
     } else {
       // Data from form is valid
