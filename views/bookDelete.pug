@@ -1,0 +1,50 @@
+extends layout
+
+block content
+
+    h1 #{title}: #{book.title}
+    p #[strong Author: ]
+        a(href=book.author.url) #{book.author.name}
+    p #[strong Summary:] #{book.summary}
+    p #[strong ISBN:] #{book.isbn}
+    p #[strong Genre: ]
+        each val, index in book.genre
+            a(href=val.url) #{val.name}
+            if index < book.genre.length - 1
+                |,&nbsp;
+
+    hr
+
+    if bookInstances.length
+        h3.text-danger  #[strong Delete the following copies before attempting to delete this book:]
+        hr
+
+        div(style="margin-left=20px;margin-top=20px")
+
+            h4 Copies
+            each bookInstance in bookInstances
+                hr
+                p #[strong Title: ]
+                    a(href=bookInstance.book.url) #{bookInstance.book.title}
+                p #[strong Imprint: ] #{bookInstance.imprint}
+                p #[strong Status: ]
+                    if bookInstance.status === "Available"
+                        span.text-success #{bookInstance.status}
+                    else if bookInstance.status === "Maintenance"
+                        span.text-danger #{bookInstance.status}
+                    else
+                        span.text-warning #{bookInstance.status}
+                if bookInstance.status !== "Available"
+                    p #[strong Due back:] #{bookInstance.dueBackFormatted}
+                p #[strong ID: ]
+                    a(href=bookInstance.url) #{bookInstance._id}
+
+    else
+        p #[strong Do you really want to delete this book?]
+        form(method="POST")
+            div.form-group
+                input#form-control(type="hidden" name="id" value=book._id)
+            button.btn.btn-primary(type="submit") Delete
+
+
+
