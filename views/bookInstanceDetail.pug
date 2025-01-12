@@ -10,7 +10,7 @@ block content
 
     p #[strong Status: ]
         if bookInstance.status === "Available"
-            span.text-succes #{bookInstance.status}
+            span.text-success #{bookInstance.status}
         else if bookInstance.status === "Maintenance"
             span.text-danger #{bookInstance.status}
         else
@@ -18,3 +18,7 @@ block content
 
     if bookInstance.status !== "Available"
         p #[strong Due back: ] #{bookInstance.dueBackFormatted}
+
+    hr
+    a(href=bookInstance.url+"/delete")
+        button.btn.btn-danger Delete copy
