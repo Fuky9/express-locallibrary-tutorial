@@ -1,6 +1,8 @@
 extends layout
 
 block content
+    p
+        a(href="/catalog/genres") Back to Genres
     h1 Genre: #{genre.name}
 
     div(class="text-container")
@@ -14,3 +16,7 @@ block content
                     br
         else
          p This genre has no books.
+    hr
+    p
+        a(href=genre.url+"/delete")
+            button.btn.btn-danger Delete Genre
