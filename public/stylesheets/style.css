@@ -15,3 +15,18 @@
 .page-text {
   font-size: 1.5rem;
 }
+
+.buttons {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.genres {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: baseline;
+}
