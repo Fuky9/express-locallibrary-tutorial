@@ -34,5 +34,5 @@ block content
     if errors
         ul
             for error in errors
-                //- ! is used for non-escaped raw HTML t o show errors properly without escaped characters e.g. <html> instead &lthmtltag&gt. Use it wisely to avoid security risks(never e.g for user input)
+                //- ! is used for non-escaped raw HTML to show errors properly without escaped characters e.g. <html> instead &lthmtltag&gt. Use it wisely to avoid security risks(never e.g for user input)
                 li!=error.msg

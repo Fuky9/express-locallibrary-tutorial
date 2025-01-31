@@ -20,5 +20,8 @@ block content
         p #[strong Due back: ] #{bookInstance.dueBackFormatted}
 
     hr
-    a(href=bookInstance.url+"/delete")
-        button.btn.btn-danger Delete copy
+    section.buttons
+        a(href=bookInstance.url+"/delete")
+            button.btn.btn-danger Delete copy
+        a(href=bookInstance.url+"/update")
+            button.btn.btn-primary Update copy
