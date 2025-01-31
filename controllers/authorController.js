@@ -140,10 +140,68 @@ exports.author_delete_post = asyncHandler(async (req, res, next) => {
 
 // Display Author update form on GET
 exports.author_update_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED:Author update GET");
+  const author = await Author.findById(req.params.id);
+
+  if (!author) {
+    err = new Error("Author not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("authorForm", {
+    title: "Update Author",
+    author: author,
+  });
 });
 
 // Handle Author update on POST
-exports.author_update_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Author update POST");
-});
+exports.author_update_post = [
+  // Validate and sanitize data
+  body("firstName")
+    .trim()
+    .isLength({ min: 2 })
+    .escape()
+    .withMessage("First name must be specified"),
+  body("familyName")
+    .trim()
+    .isLength({ min: 2 })
+    .escape()
+    .withMessage("Family name must be specified"),
+  body("dateOfBirth", "Invalid Date of birth")
+    .optional({ values: "falsy" })
+    .isISO8601()
+    .toDate(),
+  body("dateOfDeath", "Invalid Date of death")
+    .optional({ values: "falsy" })
+    .isISO8601()
+    .toDate(),
+
+  // Process request after validation and sanitization
+  asyncHandler(async (req, res, next) => {
+    errors = validationResult(req);
+    // Create author object with validated and trimmed data
+    const author = new Author({
+      firstName: req.body.firstName,
+      familyName: req.body.familyName,
+      dateOfBirth: req.body.dateOfBirth,
+      dateOfDeath: req.body.dateOfDeath,
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      res.render("authorForm", {
+        title: "Update author",
+        author: author,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      const updatedAuthor = await Author.findByIdAndUpdate(
+        req.params.id,
+        author,
+        {}
+      );
+      res.redirect(updatedAuthor.url);
+    }
+  }),
+];

@@ -18,5 +18,8 @@ block content
             p This author has no books
 
         hr
-        p
-            a(href=author.url+"/delete") Delete author
+        section.buttons
+            a(href=author.url+"/delete")
+                button.btn.btn-danger Delete Author
+            a(href=author.url+"/update")
+                buton.btn.btn-primary Update Author

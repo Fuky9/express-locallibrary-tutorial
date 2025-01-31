@@ -12,13 +12,13 @@ block content
             input#familyName.form-control(type="text" placeholder="Family name" name="familyName" required value=(undefined===author ? "" : author.familyName))
 
             label(for="dateOfBirth") Date of birth:
-            input#dateOfBirth.form-control(type="date" name="dateOfBirth" value=(undefined===author ? "" : author.dateOfBirth))
+            input#dateOfBirth.form-control(type="date" name="dateOfBirth" value=(undefined===author ? "" : author.dateOfBirthFormattedYYYYMMDD))
 
             label(for="dateOfDeath") Date of death:
-            input#dateOfDeath.form-control(type="date" name="dateOfDeath" value=(undefined===author ? "" : author.dateOfDeath))
+            input#dateOfDeath.form-control(type="date" name="dateOfDeath" value=(undefined===author ? "" : author.dateOfDeathFormattedYYYYMMDD))
         button.btn.btn-primary(type="submit") Submit
 
-    if errors
+    if errors.length > 0
         ul
             for error in errors
                 li!= error.msg

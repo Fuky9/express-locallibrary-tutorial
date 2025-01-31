@@ -39,4 +39,14 @@ AuthorSchema.virtual("formattedDateOfDeath").get(function () {
         DateTime.fromJSDate(this.dateOfDeath).toLocaleString(DateTime.DATE_MED)
     : "";
 });
+
+// Virtuals for formatted YYYY-MM-DD date
+AuthorSchema.virtual("dateOfBirthFormattedYYYYMMDD").get(function () {
+  return DateTime.fromJSDate(this.dateOfBirth).toISODate();
+});
+
+AuthorSchema.virtual("dateOfDeathFormattedYYYYMMDD").get(function () {
+  return DateTime.fromJSDate(this.dateOfDeath).toISODate();
+});
+
 module.exports = mongoose.model("Author", AuthorSchema);
